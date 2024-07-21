@@ -27,5 +27,5 @@ export default function Preview() {
       .then(({ result }) => setContent(result));
   }, [doc]);
 
-  return <div>{content}</div>;
+  return <div className="prose space-y-6 p-3">{content}</div>;
 }
