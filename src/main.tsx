@@ -4,8 +4,10 @@ import ReactDOM from "react-dom/client";
 import "@fontsource-variable/inter";
 import "./styles.css";
 
+import App from "./app";
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <h1>Hello, world!</h1>
+    <App />
   </React.StrictMode>,
 );
