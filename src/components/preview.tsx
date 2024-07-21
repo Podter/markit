@@ -6,7 +6,11 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-export function useProcessor(doc: string) {
+interface PreviewProps {
+  doc: string;
+}
+
+export default function Preview({ doc }: PreviewProps) {
   const [content, setContent] = useState(<></>);
 
   useEffect(() => {
@@ -24,5 +28,5 @@ export function useProcessor(doc: string) {
       .then(({ result }) => setContent(result));
   }, [doc]);
 
-  return content;
+  return <div>{content}</div>;
 }
