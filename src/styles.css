@@ -89,8 +89,16 @@
       @apply my-6 ml-6 list-disc [&>li]:mt-2;
     }
 
+    ol {
+      @apply my-6 ml-6 list-decimal [&>li]:mt-2;
+    }
+
     code {
       @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+    }
+
+    a {
+      @apply underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground;
     }
   }
 }
