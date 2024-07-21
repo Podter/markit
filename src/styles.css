@@ -94,11 +94,27 @@
     }
 
     code {
-      @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+      @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
     }
 
     a {
       @apply underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground;
+    }
+
+    table {
+      @apply w-full;
+    }
+
+    tr {
+      @apply m-0 border-t p-0 even:bg-muted;
+    }
+
+    th {
+      @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+    }
+
+    td {
+      @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
     }
   }
 }
