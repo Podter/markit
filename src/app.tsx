@@ -1,11 +1,17 @@
+import { useState } from "react";
+
 import TopBar from "~/components/top-bar";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "~/components/ui/resizable";
+import { useProcessor } from "./hooks/use-processor";
 
 export default function App() {
+  const [doc, setDoc] = useState("# Hello, world!\n");
+  const Content = useProcessor(doc);
+
   return (
     <>
       <TopBar />
@@ -13,7 +19,7 @@ export default function App() {
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel>Editor</ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel>Viewer</ResizablePanel>
+          <ResizablePanel>{Content}</ResizablePanel>
         </ResizablePanelGroup>
       </div>
     </>
