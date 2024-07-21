@@ -4,6 +4,7 @@ import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import {
   bracketMatching,
   defaultHighlightStyle,
+  HighlightStyle,
   indentOnInput,
   syntaxHighlighting,
 } from "@codemirror/language";
@@ -16,8 +17,28 @@ import {
   keymap,
   lineNumbers,
 } from "@codemirror/view";
+import { tags } from "@lezer/highlight";
 
 import { useDoc } from "~/contexts/doc";
+
+const headingStyle = HighlightStyle.define([
+  {
+    tag: tags.heading1,
+    class: "text-4xl font-bold",
+  },
+  {
+    tag: tags.heading2,
+    class: "text-3xl font-semibold",
+  },
+  {
+    tag: tags.heading3,
+    class: "text-2xl font-semibold",
+  },
+  {
+    tag: tags.heading4,
+    class: "text-xl font-semibold",
+  },
+]);
 
 export default function Editor() {
   const { doc, setDoc } = useDoc();
@@ -36,15 +57,13 @@ export default function Editor() {
         indentOnInput(),
         bracketMatching(),
         syntaxHighlighting(defaultHighlightStyle),
+        syntaxHighlighting(headingStyle),
         highlightActiveLine(),
         markdown({
           base: markdownLanguage,
           codeLanguages: languages,
           addKeymap: true,
         }),
-        // oneDark,
-        // transparentTheme,
-        // syntaxHighlighting,
         EditorView.lineWrapping,
         EditorView.updateListener.of((update) => {
           if (update.changes) {

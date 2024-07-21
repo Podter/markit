@@ -20,6 +20,7 @@
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.28.6",
     "@fontsource-variable/inter": "^5.0.19",
+    "@lezer/highlight": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@tauri-apps/api": "^1",
     "class-variance-authority": "^0.7.0",
