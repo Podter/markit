@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
+import { useAtomValue } from "jotai";
 import rehypeReact from "rehype-react";
 import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-import { useDoc } from "~/contexts/doc";
+import { docAtom } from "~/lib/atoms";
 
 export default function Preview() {
-  const { doc } = useDoc();
+  const doc = useAtomValue(docAtom);
   const [content, setContent] = useState(<></>);
 
   useEffect(() => {

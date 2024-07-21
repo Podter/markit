@@ -18,8 +18,9 @@ import {
   lineNumbers,
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
+import { useAtom } from "jotai";
 
-import { useDoc } from "~/contexts/doc";
+import { docAtom } from "~/lib/atoms";
 
 const headingStyle = HighlightStyle.define([
   {
@@ -41,7 +42,7 @@ const headingStyle = HighlightStyle.define([
 ]);
 
 export default function Editor() {
-  const { doc, setDoc } = useDoc();
+  const [doc, setDoc] = useAtom(docAtom);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

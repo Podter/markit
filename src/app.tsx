@@ -6,11 +6,10 @@ import {
 } from "~/components/ui/resizable";
 import Editor from "./components/editor";
 import Preview from "./components/preview";
-import { DocProvider } from "./contexts/doc";
 
 export default function App() {
   return (
-    <DocProvider>
+    <>
       <TopBar />
       <ResizablePanelGroup
         direction="horizontal"
@@ -24,6 +23,6 @@ export default function App() {
           <Preview />
         </ResizablePanel>
       </ResizablePanelGroup>
-    </DocProvider>
+    </>
   );
 }
