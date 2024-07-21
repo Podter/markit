@@ -12,7 +12,10 @@ export default function App() {
   return (
     <DocProvider>
       <TopBar />
-      <ResizablePanelGroup direction="horizontal">
+      <ResizablePanelGroup
+        direction="horizontal"
+        className="min-h-[calc(100vh-2rem)]"
+      >
         <ResizablePanel>
           <Editor />
         </ResizablePanel>
