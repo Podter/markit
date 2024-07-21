@@ -1,3 +1,5 @@
+import { useAtomValue } from "jotai";
+
 import TopBar from "~/components/top-bar";
 import {
   ResizableHandle,
@@ -6,8 +8,11 @@ import {
 } from "~/components/ui/resizable";
 import Editor from "./components/editor";
 import Preview from "./components/preview";
+import { previewOpenAtom } from "./lib/atoms";
 
 export default function App() {
+  const previewOpen = useAtomValue(previewOpenAtom);
+
   return (
     <>
       <TopBar />
@@ -15,13 +20,17 @@ export default function App() {
         direction="horizontal"
         className="min-h-[calc(100vh-2rem)]"
       >
-        <ResizablePanel minSize={25}>
+        <ResizablePanel minSize={25} order={1} id="editor-panel">
           <Editor />
         </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel minSize={25}>
-          <Preview />
-        </ResizablePanel>
+        {previewOpen && (
+          <>
+            <ResizableHandle />
+            <ResizablePanel minSize={25} order={2} id="preview-panel">
+              <Preview />
+            </ResizablePanel>
+          </>
+        )}
       </ResizablePanelGroup>
     </>
   );
