@@ -12,17 +12,15 @@ export default function App() {
   return (
     <DocProvider>
       <TopBar />
-      <div className="h-[calc(100vh-2rem)] w-full">
-        <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel>
-            <Editor />
-          </ResizablePanel>
-          <ResizableHandle />
-          <ResizablePanel>
-            <Preview />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </div>
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel>
+          <Editor />
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel>
+          <Preview />
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </DocProvider>
   );
 }
