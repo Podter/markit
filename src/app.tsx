@@ -1,14 +1,20 @@
-import { useState } from "react";
-
-import { Button } from "./components/ui/button";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "~/components/ui/resizable";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <div>
-      <h1>Count: {count}</h1>
-      <Button onClick={() => setCount((n) => n + 1)}>Click me</Button>
-    </div>
+    <>
+      <div className="h-8 w-full border-b"></div>
+      <div className="h-[calc(100vh-2rem)] w-full">
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel>Editor</ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel>Viewer</ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
+    </>
   );
 }
