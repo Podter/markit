@@ -10,7 +10,7 @@ import { useProcessor } from "./hooks/use-processor";
 
 export default function App() {
   const [doc, setDoc] = useState("# Hello, world!\n");
-  const Content = useProcessor(doc);
+  const content = useProcessor(doc);
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function App() {
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel>Editor</ResizablePanel>
           <ResizableHandle />
-          <ResizablePanel>{Content}</ResizablePanel>
+          <ResizablePanel>{content}</ResizablePanel>
         </ResizablePanelGroup>
       </div>
     </>
