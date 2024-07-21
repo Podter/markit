@@ -6,11 +6,10 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-interface PreviewProps {
-  doc: string;
-}
+import { useDoc } from "~/contexts/doc";
 
-export default function Preview({ doc }: PreviewProps) {
+export default function Preview() {
+  const { doc } = useDoc();
   const [content, setContent] = useState(<></>);
 
   useEffect(() => {

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import TopBar from "~/components/top-bar";
 import {
   ResizableHandle,
@@ -8,12 +6,11 @@ import {
 } from "~/components/ui/resizable";
 import Editor from "./components/editor";
 import Preview from "./components/preview";
+import { DocProvider } from "./contexts/doc";
 
 export default function App() {
-  const [doc, setDoc] = useState("# Hello, world!\n");
-
   return (
-    <>
+    <DocProvider>
       <TopBar />
       <div className="h-[calc(100vh-2rem)] w-full">
         <ResizablePanelGroup direction="horizontal">
@@ -22,10 +19,10 @@ export default function App() {
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel>
-            <Preview doc={doc} />
+            <Preview />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
-    </>
+    </DocProvider>
   );
 }
