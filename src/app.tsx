@@ -16,11 +16,11 @@ export default function App() {
         direction="horizontal"
         className="min-h-[calc(100vh-2rem)]"
       >
-        <ResizablePanel>
+        <ResizablePanel minSize={25}>
           <Editor />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>
+        <ResizablePanel minSize={25}>
           <Preview />
         </ResizablePanel>
       </ResizablePanelGroup>
