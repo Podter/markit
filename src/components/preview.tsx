@@ -8,6 +8,7 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
 import { docAtom } from "~/lib/atoms";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function Preview() {
   const doc = useAtomValue(docAtom);
@@ -28,5 +29,9 @@ export default function Preview() {
       .then(({ result }) => setContent(result));
   }, [doc]);
 
-  return <div className="prose space-y-6 p-3">{content}</div>;
+  return (
+    <ScrollArea className="h-[calc(100vh-2rem)]">
+      <div className="prose space-y-6 p-3">{content}</div>
+    </ScrollArea>
+  );
 }

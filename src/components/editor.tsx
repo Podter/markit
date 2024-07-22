@@ -21,6 +21,7 @@ import { tags } from "@lezer/highlight";
 import { useAtom } from "jotai";
 
 import { docAtom } from "~/lib/atoms";
+import { ScrollArea } from "./ui/scroll-area";
 
 const headingStyle = HighlightStyle.define([
   {
@@ -85,5 +86,9 @@ export default function Editor() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref]);
 
-  return <div ref={ref}></div>;
+  return (
+    <ScrollArea className="h-[calc(100vh-2rem)]">
+      <div ref={ref}></div>
+    </ScrollArea>
+  );
 }

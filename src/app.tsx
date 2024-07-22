@@ -16,10 +16,7 @@ export default function App() {
   return (
     <>
       <TopBar />
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="min-h-[calc(100vh-2rem)]"
-      >
+      <ResizablePanelGroup direction="horizontal">
         <ResizablePanel minSize={25} order={1} id="editor-panel">
           <Editor />
         </ResizablePanel>

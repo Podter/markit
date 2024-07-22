@@ -8,7 +8,7 @@ export default function TopBar() {
   const setPreviewOpen = useSetAtom(previewOpenAtom);
 
   return (
-    <div className="sticky top-0 z-50 flex h-8 w-full select-none items-center justify-between border-b bg-background px-1">
+    <div className="flex h-8 w-full select-none items-center justify-between border-b bg-background px-1">
       <div className="flex items-center">
         <FileText className="mx-1" size={14} />
         <p className="text-xs">my-markdown.md</p>
