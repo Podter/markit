@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 export const docAtom = atom(`# Markdown preview
 
@@ -71,4 +72,4 @@ This web site is using \`markedjs/marked\`.
 `);
 
 export const previewOpenAtom = atom(true);
-export const syncScrollAtom = atom(true);
+export const syncScrollAtom = atomWithStorage("sync-scroll", true);
