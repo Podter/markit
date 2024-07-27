@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import {
@@ -9,7 +8,6 @@ import {
   syntaxHighlighting,
 } from "@codemirror/language";
 import { languages } from "@codemirror/language-data";
-import { EditorState } from "@codemirror/state";
 import {
   EditorView,
   highlightActiveLine,
@@ -18,6 +16,7 @@ import {
   lineNumbers,
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
+import CodeMirror from "@uiw/react-codemirror";
 import { useAtom } from "jotai";
 
 import { useScrollSync } from "~/hooks/use-scroll-sync";
@@ -45,53 +44,31 @@ const headingStyle = HighlightStyle.define([
 
 export default function Editor() {
   const scrollProps = useScrollSync("preview");
-
   const [doc, setDoc] = useAtom(docAtom);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const startState = EditorState.create({
-      doc,
-      extensions: [
-        keymap.of([...defaultKeymap, ...historyKeymap]),
-        lineNumbers(),
-        highlightActiveLineGutter(),
-        history(),
-        indentOnInput(),
-        bracketMatching(),
-        syntaxHighlighting(defaultHighlightStyle),
-        syntaxHighlighting(headingStyle),
-        highlightActiveLine(),
-        markdown({
-          base: markdownLanguage,
-          codeLanguages: languages,
-          addKeymap: true,
-        }),
-        EditorView.lineWrapping,
-        EditorView.updateListener.of((update) => {
-          if (update.changes) {
-            setDoc(update.state.doc.toString());
-          }
-        }),
-      ],
-    });
-
-    const view = new EditorView({
-      state: startState,
-      parent: ref.current,
-    });
-
-    () => {
-      view.destroy();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref]);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]" id="editor" {...scrollProps}>
-      <div ref={ref}></div>
+      <CodeMirror
+        value={doc}
+        onChange={setDoc}
+        extensions={[
+          keymap.of([...defaultKeymap, ...historyKeymap]),
+          lineNumbers(),
+          highlightActiveLineGutter(),
+          history(),
+          indentOnInput(),
+          bracketMatching(),
+          syntaxHighlighting(defaultHighlightStyle),
+          syntaxHighlighting(headingStyle),
+          highlightActiveLine(),
+          markdown({
+            base: markdownLanguage,
+            codeLanguages: languages,
+            addKeymap: true,
+          }),
+          EditorView.lineWrapping,
+        ]}
+      />
     </ScrollArea>
   );
 }
