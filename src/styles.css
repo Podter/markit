@@ -97,6 +97,13 @@
       @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm;
     }
 
+    pre {
+      @apply mt-6 rounded-md border p-3 shadow;
+      code {
+        @apply bg-background !px-0 !py-0;
+      }
+    }
+
     a {
       @apply underline decoration-foreground/30 underline-offset-4 transition-colors hover:decoration-foreground;
     }
