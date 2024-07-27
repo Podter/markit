@@ -9,7 +9,7 @@ export default function TopBar() {
 
   return (
     <div className="flex h-8 w-full select-none items-center justify-between border-b bg-background px-1">
-      <div className="flex items-center">
+      <div className="flex cursor-default select-none items-center">
         <FileText className="mx-1" size={14} />
         <p className="text-xs">my-markdown.md</p>
         <Dot size={28} className="-ml-1.5" />
