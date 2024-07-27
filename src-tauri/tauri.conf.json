@@ -17,6 +17,7 @@
         "writeFile": true
       },
       "dialog": {
+        "message": true,
         "open": true,
         "save": true
       }
