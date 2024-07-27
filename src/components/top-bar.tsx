@@ -40,33 +40,39 @@ export default function TopBar() {
     }
   }, [setDoc]);
 
-  const saveFile = useCallback(async () => {
-    try {
-      if (doc) {
-        await writeTextFile(doc, docContent);
-      } else {
-        const savePath = await save({
-          filters: [
-            {
-              name: "Markdown",
-              extensions: ["md"],
-            },
-          ],
+  const saveFile = useCallback(
+    async (savePath: string) => {
+      try {
+        await writeTextFile(savePath, docContent);
+        setSaved(true);
+      } catch (e) {
+        console.error(e);
+        await message("An error occurred while saving the file.", {
+          title: "Error",
+          type: "error",
         });
-        if (savePath) {
-          await writeTextFile(savePath, docContent);
-          setDoc(savePath);
-        }
       }
-      setSaved(true);
-    } catch (e) {
-      console.error(e);
-      await message("An error occurred while saving the file.", {
-        title: "Error",
-        type: "error",
+    },
+    [docContent, setSaved],
+  );
+
+  const saveBtn = useCallback(async () => {
+    if (doc) {
+      await saveFile(doc);
+    } else {
+      const savePath = await save({
+        filters: [
+          {
+            name: "Markdown",
+            extensions: ["md"],
+          },
+        ],
       });
+      if (savePath) {
+        await saveFile(savePath);
+      }
     }
-  }, [doc, docContent, setSaved, setDoc]);
+  }, [doc, saveFile]);
 
   return (
     <div className="flex h-8 w-full select-none items-center justify-between border-b bg-background px-1">
@@ -93,12 +99,12 @@ export default function TopBar() {
           </Button>
         </Tooltip>
         <Tooltip content="Save">
-          <Button size="iconSm" variant="ghost" onClick={saveFile}>
+          <Button size="iconSm" variant="ghost" onClick={saveBtn}>
             <Save size={14} />
             <span className="sr-only">Save</span>
           </Button>
         </Tooltip>
-        <Dropdown />
+        <Dropdown saveFile={saveFile} />
       </div>
     </div>
   );

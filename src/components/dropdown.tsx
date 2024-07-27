@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+import { save } from "@tauri-apps/api/dialog";
 import { useAtom } from "jotai";
 import { Ellipsis } from "lucide-react";
 
@@ -7,6 +9,7 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -16,9 +19,27 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export default function Dropdown() {
+interface DropdownProps {
+  saveFile: (savePath: string) => Promise<void>;
+}
+
+export default function Dropdown({ saveFile }: DropdownProps) {
   const [syncScroll, setSyncScroll] = useAtom(syncScrollAtom);
   const [theme, setTheme] = useAtom(themeAtom);
+
+  const saveAs = useCallback(async () => {
+    const savePath = await save({
+      filters: [
+        {
+          name: "Markdown",
+          extensions: ["md"],
+        },
+      ],
+    });
+    if (savePath) {
+      await saveFile(savePath);
+    }
+  }, [saveFile]);
 
   return (
     <DropdownMenu>
@@ -33,6 +54,7 @@ export default function Dropdown() {
         align="end"
         className="origin-top-right"
       >
+        <DropdownMenuItem onSelect={saveAs}>Save as</DropdownMenuItem>
         <DropdownMenuCheckboxItem
           checked={syncScroll}
           onCheckedChange={setSyncScroll}
