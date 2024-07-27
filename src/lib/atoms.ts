@@ -3,6 +3,7 @@ import { atomWithStorage } from "jotai/utils";
 
 export const docAtom = atomWithStorage<string | null>("path", null);
 export const docContentAtom = atom("");
+export const savedAtom = atom(true);
 
 export const previewOpenAtom = atom(true);
 export const syncScrollAtom = atomWithStorage("sync-scroll", true);

@@ -1,16 +1,24 @@
 import { useCallback, useMemo } from "react";
-import { open } from "@tauri-apps/api/dialog";
-import { useAtom, useSetAtom } from "jotai";
+import { message, open, save } from "@tauri-apps/api/dialog";
+import { writeTextFile } from "@tauri-apps/api/fs";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { BookOpenText, Dot, FileText, FolderOpen, Save } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
-import { docAtom, previewOpenAtom } from "~/lib/atoms";
+import {
+  docAtom,
+  docContentAtom,
+  previewOpenAtom,
+  savedAtom,
+} from "~/lib/atoms";
 import Dropdown from "./dropdown";
 import { Tooltip } from "./ui/tooltip";
 
 export default function TopBar() {
   const setPreviewOpen = useSetAtom(previewOpenAtom);
   const [doc, setDoc] = useAtom(docAtom);
+  const [saved, setSaved] = useAtom(savedAtom);
+  const docContent = useAtomValue(docContentAtom);
 
   const filename = useMemo(() => {
     if (doc === null) {
@@ -32,12 +40,40 @@ export default function TopBar() {
     }
   }, [setDoc]);
 
+  const saveFile = useCallback(async () => {
+    try {
+      if (doc) {
+        await writeTextFile(doc, docContent);
+      } else {
+        const savePath = await save({
+          filters: [
+            {
+              name: "Markdown",
+              extensions: ["md"],
+            },
+          ],
+        });
+        if (savePath) {
+          await writeTextFile(savePath, docContent);
+          setDoc(savePath);
+        }
+      }
+      setSaved(true);
+    } catch (e) {
+      console.error(e);
+      await message("An error occurred while saving the file.", {
+        title: "Error",
+        type: "error",
+      });
+    }
+  }, [doc, docContent, setSaved, setDoc]);
+
   return (
     <div className="flex h-8 w-full select-none items-center justify-between border-b bg-background px-1">
       <div className="flex cursor-default select-none items-center">
         <FileText className="mx-1" size={14} />
         <p className="text-xs">{filename}</p>
-        <Dot size={28} className="-ml-1.5" />
+        {!saved && <Dot size={28} className="-ml-1.5" />}
       </div>
       <div className="flex items-center space-x-1">
         <Tooltip content="Toggle preview">
@@ -57,7 +93,7 @@ export default function TopBar() {
           </Button>
         </Tooltip>
         <Tooltip content="Save">
-          <Button size="iconSm" variant="ghost">
+          <Button size="iconSm" variant="ghost" onClick={saveFile}>
             <Save size={14} />
             <span className="sr-only">Save</span>
           </Button>

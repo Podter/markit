@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import {
@@ -18,10 +19,10 @@ import {
 import { tags } from "@lezer/highlight";
 import { whiteDark, whiteLight } from "@uiw/codemirror-theme-white";
 import CodeMirror from "@uiw/react-codemirror";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 import { useScrollSync } from "~/hooks/use-scroll-sync";
-import { docContentAtom, resolvedThemeAtom } from "~/lib/atoms";
+import { docContentAtom, resolvedThemeAtom, savedAtom } from "~/lib/atoms";
 import { ScrollArea } from "./ui/scroll-area";
 
 const headingStyle = HighlightStyle.define([
@@ -46,13 +47,22 @@ const headingStyle = HighlightStyle.define([
 export default function Editor() {
   const scrollProps = useScrollSync("preview");
   const [docContent, setDocContent] = useAtom(docContentAtom);
+  const setSaved = useSetAtom(savedAtom);
   const resolvedTheme = useAtomValue(resolvedThemeAtom);
+
+  const onChange = useCallback(
+    (content: string) => {
+      setDocContent(content);
+      setSaved(false);
+    },
+    [setDocContent, setSaved],
+  );
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]" id="editor" {...scrollProps}>
       <CodeMirror
         value={docContent}
-        onChange={setDocContent}
+        onChange={onChange}
         theme={resolvedTheme === "dark" ? whiteDark : whiteLight}
         extensions={[
           keymap.of([...defaultKeymap, ...historyKeymap]),
