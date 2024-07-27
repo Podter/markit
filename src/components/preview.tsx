@@ -8,13 +8,13 @@ import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
 import { useScrollSync } from "~/hooks/use-scroll-sync";
-import { docAtom } from "~/lib/atoms";
+import { docContentAtom } from "~/lib/atoms";
 import { ScrollArea } from "./ui/scroll-area";
 
 export default function Preview() {
   const scrollProps = useScrollSync("editor");
 
-  const doc = useAtomValue(docAtom);
+  const docContent = useAtomValue(docContentAtom);
   const [content, setContent] = useState(<></>);
 
   useEffect(() => {
@@ -28,9 +28,9 @@ export default function Preview() {
         jsx: jsx,
         jsxs: jsxs,
       })
-      .process(doc)
+      .process(docContent)
       .then(({ result }) => setContent(result));
-  }, [doc]);
+  }, [docContent]);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]" id="preview" {...scrollProps}>

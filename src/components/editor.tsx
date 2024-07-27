@@ -21,7 +21,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { useAtom, useAtomValue } from "jotai";
 
 import { useScrollSync } from "~/hooks/use-scroll-sync";
-import { docAtom, resolvedThemeAtom, themeAtom } from "~/lib/atoms";
+import { docContentAtom, resolvedThemeAtom } from "~/lib/atoms";
 import { ScrollArea } from "./ui/scroll-area";
 
 const headingStyle = HighlightStyle.define([
@@ -45,14 +45,14 @@ const headingStyle = HighlightStyle.define([
 
 export default function Editor() {
   const scrollProps = useScrollSync("preview");
-  const [doc, setDoc] = useAtom(docAtom);
+  const [docContent, setDocContent] = useAtom(docContentAtom);
   const resolvedTheme = useAtomValue(resolvedThemeAtom);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]" id="editor" {...scrollProps}>
       <CodeMirror
-        value={doc}
-        onChange={setDoc}
+        value={docContent}
+        onChange={setDocContent}
         theme={resolvedTheme === "dark" ? whiteDark : whiteLight}
         extensions={[
           keymap.of([...defaultKeymap, ...historyKeymap]),
