@@ -27,6 +27,9 @@ export default function Preview() {
         Fragment: Fragment,
         jsx: jsx,
         jsxs: jsxs,
+        components: {
+          a: (props) => <a {...props} target="_blank" />,
+        },
       })
       .process(docContent)
       .then(({ result }) => setContent(result));
