@@ -73,3 +73,4 @@ This web site is using \`markedjs/marked\`.
 
 export const previewOpenAtom = atom(true);
 export const syncScrollAtom = atomWithStorage("sync-scroll", true);
+export const themeAtom = atomWithStorage("theme", "system");
