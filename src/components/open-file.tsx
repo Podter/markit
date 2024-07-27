@@ -1,16 +1,19 @@
 import { useCallback } from "react";
-import { message, open } from "@tauri-apps/api/dialog";
+import { ask, message, open } from "@tauri-apps/api/dialog";
 import { readTextFile } from "@tauri-apps/api/fs";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { FolderOpen } from "lucide-react";
 
-import { docAtom, docContentAtom } from "~/lib/atoms";
+import { useSaveFile } from "~/hooks/use-save-file";
+import { docAtom, docContentAtom, savedAtom } from "~/lib/atoms";
 import { Button } from "./ui/button";
 import { Tooltip } from "./ui/tooltip";
 
 export function OpenFile() {
   const setDoc = useSetAtom(docAtom);
   const setDocContent = useSetAtom(docContentAtom);
+  const save = useSaveFile();
+  const saved = useAtomValue(savedAtom);
 
   const openFile = useCallback(async () => {
     const selectedPath = await open({
@@ -21,6 +24,18 @@ export function OpenFile() {
       return;
     } else {
       try {
+        if (!saved) {
+          const shouldSave = await ask(
+            "You have unsaved changes. Do you want to save them before opening a new file?",
+            {
+              title: "Unsaved Changes",
+            },
+          );
+          if (shouldSave) {
+            await save();
+          }
+        }
+
         setDoc(selectedPath);
         const content = await readTextFile(selectedPath);
         setDocContent(content);
@@ -37,7 +52,7 @@ export function OpenFile() {
         setDocContent("");
       }
     }
-  }, [setDoc, setDocContent]);
+  }, [save, saved, setDoc, setDocContent]);
 
   return (
     <Tooltip content="Open">
