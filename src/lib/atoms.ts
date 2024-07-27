@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
-export const docAtom = atomWithStorage<string | null>("path", null);
+export const docAtom = atom<string | null>(null);
 export const docContentAtom = atom("");
 export const savedAtom = atom(true);
 
