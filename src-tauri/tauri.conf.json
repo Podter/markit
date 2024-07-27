@@ -13,15 +13,18 @@
     "allowlist": {
       "all": false,
       "fs": {
+        "all": false,
         "readFile": true,
         "writeFile": true
       },
       "dialog": {
+        "all": false,
         "message": true,
         "open": true,
         "save": true
       },
       "shell": {
+        "all": false,
         "open": true
       }
     },
