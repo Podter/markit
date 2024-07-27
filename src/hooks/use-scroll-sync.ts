@@ -1,7 +1,11 @@
 import type { UIEvent as ReactUIEvent } from "react";
 import { useCallback, useState } from "react";
+import { useAtomValue } from "jotai";
+
+import { syncScrollAtom } from "~/lib/atoms";
 
 export function useScrollSync<T extends Element>(target: string) {
+  const syncScroll = useAtomValue(syncScrollAtom);
   const [disabled, setDisabled] = useState(false);
 
   const onMouseEnter = useCallback(() => setDisabled(false), []);
@@ -9,7 +13,7 @@ export function useScrollSync<T extends Element>(target: string) {
 
   const onScroll = useCallback(
     (e: ReactUIEvent<T, UIEvent>) => {
-      if (disabled) return;
+      if (disabled || !syncScroll) return;
 
       const ratio =
         e.currentTarget.scrollTop /
@@ -22,7 +26,7 @@ export function useScrollSync<T extends Element>(target: string) {
         targetElement.scrollTo(0, targetY);
       }
     },
-    [target, disabled],
+    [target, disabled, syncScroll],
   );
 
   return { onScroll, onMouseEnter, onMouseLeave };

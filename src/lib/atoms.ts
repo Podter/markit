@@ -71,3 +71,4 @@ This web site is using \`markedjs/marked\`.
 `);
 
 export const previewOpenAtom = atom(true);
+export const syncScrollAtom = atom(true);

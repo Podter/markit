@@ -1,5 +1,7 @@
+import { useAtom } from "jotai";
 import { Ellipsis } from "lucide-react";
 
+import { syncScrollAtom } from "~/lib/atoms";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -9,6 +11,8 @@ import {
 } from "./ui/dropdown-menu";
 
 export default function Dropdown() {
+  const [syncScroll, setSyncScroll] = useAtom(syncScrollAtom);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,7 +27,12 @@ export default function Dropdown() {
         className="origin-top-right"
       >
         <DropdownMenuCheckboxItem>Dark mode</DropdownMenuCheckboxItem>
-        <DropdownMenuCheckboxItem>Sync scroll</DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem
+          checked={syncScroll}
+          onCheckedChange={setSyncScroll}
+        >
+          Sync scroll
+        </DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
