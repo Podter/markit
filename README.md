@@ -1,7 +1,31 @@
-# Tauri + React + Typescript
+# MarkIt
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+![MarkIt - A markdown editor built with Tauri and React](docs/markit-app.png)
 
-## Recommended IDE Setup
+MarkIt is a simple markdown editor that allows you to write and preview markdown in real-time. It is built using React and Tauri.
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+## Developing and building
+
+This should work on all operating systems. Including Windows, macOS and Linux
+
+### Installing building dependencies
+
+Make sure you have Node.js and Rust installed and follow [this instruction](https://tauri.app/v1/guides/getting-started/prerequisites) to install Tauri building dependencies
+
+### Developing
+
+```bash
+pnpm dev
+```
+
+### Building
+
+```bash
+pnpm build
+```
+
+The built executable should be in `src-tauri/target/release`
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more information.

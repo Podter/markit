@@ -1,7 +1,9 @@
 {
   "name": "markit",
-  "private": true,
-  "version": "0.0.0",
+  "description": "A markdown editor built with Tauri and React.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Podter",
   "type": "module",
   "scripts": {
     "dev": "tauri dev",
