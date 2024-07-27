@@ -6,6 +6,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { docContentAtom, savedAtom } from "~/lib/atoms";
 import Dropdown from "./dropdown";
 import Filename from "./filename";
+import { NewFile } from "./new-file";
 import { OpenFile } from "./open-file";
 import { PreviewToggle } from "./preview-toggle";
 import { SaveFile } from "./save-file";
@@ -35,6 +36,7 @@ export default function TopBar() {
       <Filename />
       <div className="flex items-center space-x-1">
         <PreviewToggle />
+        <NewFile />
         <OpenFile />
         <SaveFile saveFile={saveFile} />
         <Dropdown saveFile={saveFile} />
