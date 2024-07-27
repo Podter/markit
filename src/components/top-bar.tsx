@@ -3,6 +3,7 @@ import { BookOpenText, Dot, FileText, FolderOpen, Save } from "lucide-react";
 
 import { Button } from "~/components/ui/button";
 import { previewOpenAtom } from "~/lib/atoms";
+import Dropdown from "./dropdown";
 
 export default function TopBar() {
   const setPreviewOpen = useSetAtom(previewOpenAtom);
@@ -31,6 +32,7 @@ export default function TopBar() {
           <Save size={14} />
           <span className="sr-only">Save</span>
         </Button>
+        <Dropdown />
       </div>
     </div>
   );
