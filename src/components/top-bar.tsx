@@ -4,6 +4,7 @@ import { BookOpenText, Dot, FileText, FolderOpen, Save } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { previewOpenAtom } from "~/lib/atoms";
 import Dropdown from "./dropdown";
+import { Tooltip } from "./ui/tooltip";
 
 export default function TopBar() {
   const setPreviewOpen = useSetAtom(previewOpenAtom);
@@ -16,22 +17,28 @@ export default function TopBar() {
         <Dot size={28} className="-ml-1.5" />
       </div>
       <div className="flex items-center space-x-1">
-        <Button
-          size="iconSm"
-          variant="ghost"
-          onClick={() => setPreviewOpen((open) => !open)}
-        >
-          <BookOpenText size={14} />
-          <span className="sr-only">Toggle preview</span>
-        </Button>
-        <Button size="iconSm" variant="ghost">
-          <FolderOpen size={14} />
-          <span className="sr-only">Open</span>
-        </Button>
-        <Button size="iconSm" variant="ghost">
-          <Save size={14} />
-          <span className="sr-only">Save</span>
-        </Button>
+        <Tooltip content="Toggle preview">
+          <Button
+            size="iconSm"
+            variant="ghost"
+            onClick={() => setPreviewOpen((open) => !open)}
+          >
+            <BookOpenText size={14} />
+            <span className="sr-only">Toggle preview</span>
+          </Button>
+        </Tooltip>
+        <Tooltip content="Open">
+          <Button size="iconSm" variant="ghost">
+            <FolderOpen size={14} />
+            <span className="sr-only">Open</span>
+          </Button>
+        </Tooltip>
+        <Tooltip content="Save">
+          <Button size="iconSm" variant="ghost">
+            <Save size={14} />
+            <span className="sr-only">Save</span>
+          </Button>
+        </Tooltip>
         <Dropdown />
       </div>
     </div>
