@@ -20,6 +20,7 @@ import {
 import { tags } from "@lezer/highlight";
 import { useAtom } from "jotai";
 
+import { useScrollSync } from "~/hooks/use-scroll-sync";
 import { docAtom } from "~/lib/atoms";
 import { ScrollArea } from "./ui/scroll-area";
 
@@ -43,6 +44,8 @@ const headingStyle = HighlightStyle.define([
 ]);
 
 export default function Editor() {
+  const scrollProps = useScrollSync("preview");
+
   const [doc, setDoc] = useAtom(docAtom);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -87,7 +90,7 @@ export default function Editor() {
   }, [ref]);
 
   return (
-    <ScrollArea className="h-[calc(100vh-2rem)]">
+    <ScrollArea className="h-[calc(100vh-2rem)]" id="editor" {...scrollProps}>
       <div ref={ref}></div>
     </ScrollArea>
   );

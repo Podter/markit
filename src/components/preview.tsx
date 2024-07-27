@@ -7,10 +7,13 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
+import { useScrollSync } from "~/hooks/use-scroll-sync";
 import { docAtom } from "~/lib/atoms";
 import { ScrollArea } from "./ui/scroll-area";
 
 export default function Preview() {
+  const scrollProps = useScrollSync("editor");
+
   const doc = useAtomValue(docAtom);
   const [content, setContent] = useState(<></>);
 
@@ -30,7 +33,7 @@ export default function Preview() {
   }, [doc]);
 
   return (
-    <ScrollArea className="h-[calc(100vh-2rem)]">
+    <ScrollArea className="h-[calc(100vh-2rem)]" id="preview" {...scrollProps}>
       <div className="prose space-y-6 p-3">{content}</div>
     </ScrollArea>
   );
