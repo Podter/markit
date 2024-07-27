@@ -16,11 +16,12 @@ import {
   lineNumbers,
 } from "@codemirror/view";
 import { tags } from "@lezer/highlight";
+import { whiteDark, whiteLight } from "@uiw/codemirror-theme-white";
 import CodeMirror from "@uiw/react-codemirror";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 
 import { useScrollSync } from "~/hooks/use-scroll-sync";
-import { docAtom } from "~/lib/atoms";
+import { docAtom, resolvedThemeAtom, themeAtom } from "~/lib/atoms";
 import { ScrollArea } from "./ui/scroll-area";
 
 const headingStyle = HighlightStyle.define([
@@ -45,12 +46,14 @@ const headingStyle = HighlightStyle.define([
 export default function Editor() {
   const scrollProps = useScrollSync("preview");
   const [doc, setDoc] = useAtom(docAtom);
+  const resolvedTheme = useAtomValue(resolvedThemeAtom);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]" id="editor" {...scrollProps}>
       <CodeMirror
         value={doc}
         onChange={setDoc}
+        theme={resolvedTheme === "dark" ? whiteDark : whiteLight}
         extensions={[
           keymap.of([...defaultKeymap, ...historyKeymap]),
           lineNumbers(),

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { Ellipsis } from "lucide-react";
 
@@ -20,24 +19,6 @@ import {
 export default function Dropdown() {
   const [syncScroll, setSyncScroll] = useAtom(syncScrollAtom);
   const [theme, setTheme] = useAtom(themeAtom);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
-      return;
-    }
-
-    root.classList.add(theme);
-  }, [theme]);
 
   return (
     <DropdownMenu>
